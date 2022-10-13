@@ -15,10 +15,8 @@ const {NotImplementedError} = require('../extensions/index.js');
  * => 'STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS'
  *
  */
-function repeater(str, options) {
-    return new Array(options.repeatTimes || 1)
-        .fill(str)
-        .map(it =>
+const repeater = (str, options) => new Array(options.repeatTimes || 1)
+        .fill(str).map(it =>
             !!options.addition || typeof options.addition === 'object' || typeof options.addition === 'boolean'
                 ? it + new Array(options.additionRepeatTimes || 1)
                   .fill(options.addition || `${options.addition}`)
@@ -26,7 +24,6 @@ function repeater(str, options) {
                 : it
         )
         .join(options.separator || '+')
-}
 
 module.exports = {
     repeater
