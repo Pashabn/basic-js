@@ -14,35 +14,24 @@ const {NotImplementedError} = require('../extensions/index.js');
  *
  */
 
-function transform(arr) {
-    throw new NotImplementedError('Not implemented');
-   // remove line with error and write your code here
+const transform = arr => {
+    if (!Array.isArray(arr)) throw new Error('\'arr\' parameter must be an instance of the Array!')
+    const temp = []
+    arr.forEach((it, i) => {
+        if (it === '--double-prev') {
+            if (temp.length) temp.push(temp[temp.length - 1])
+        } else if (it === '--double-next') {
+            temp.push(arr[i + 1] || '')
+        } else if (it === '--discard-next') {
+            if (arr[i + 1]) arr[i + 1] = ''
+        } else if (it === '--discard-prev') {
+            if (temp.length) temp[temp.length - 1] = ''
+        } else {
+            temp.push(it)
+        }
+    })
+    return temp.filter(i => i !== '')
 }
-// const a = '--double-prev'
-// const b = '--double-next'
-// const c = '--discard-next'
-// const d = '--discard-prev'
-// const e = ''
-// const transform = arr => {
-// if(!Array.isArray(arr)) throw new Error('\'arr\' parameter must be an instance of the Array!')
-//
-// //arr instanceof Array ? arr.map((it,i,arr) => arr[i-1] === c ? e : arr[i+1] === d ? e : it ).filter(it => ![c,d,e].includes(it)).map((it,i,arr) => it === a ? arr[i-1] || e : it === b ? arr[i+1] || e : it) : Error('arr parameter must be an instance of the Array!')
-//     const check = (ar, it, i) => {
-//         if (it === a) ar.splice(i, 1, ar[i - 1])
-//         if (it === b) ar.splice(i, 1, ar[i + 1])
-//         if (it === c) ar.splice(i, 2)
-//         if (it === d) ar.splice(i - 1, 2)
-//         fin(ar)
-//     }
-//
-//     function fin(ar) {
-//         const a = JSON.parse(JSON.stringify(ar))
-//         a.forEach((it, i) => typeof (it) === 'string' && check(a, it, i))
-//         return a
-//     }
-//
-//     return fin(arr)
-// }
 
 
 module.exports = {
